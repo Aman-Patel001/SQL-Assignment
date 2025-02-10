@@ -1,0 +1,15 @@
+-- Query 1
+-- New Customers Acquired in June 2023
+select 
+PER.party_id, 
+PER.first_name, 
+PER.last_name, 
+PTYRL.role_type_id, 
+info_string as email_address, 
+TN.contact_number, 
+PER.created_stamp as entry_date
+from person as PER inner join party_role as PTYRL on PER.party_id = PTYRL.party_id 
+left join party_contact_mech as PCM on PER.party_id = PCM.party_id 
+left join contact_mech as CM on PCM.contact_mech_id = CM.contact_mech_id 
+left join telecom_number as TN on PCM.contact_mech_id = TN.contact_mech_id
+where PTYRL.role_type_id = "CUSTOMER" and (PER.created_stamp between "2023-06-01" and "2023-06-30");

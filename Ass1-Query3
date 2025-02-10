@@ -1,0 +1,9 @@
+-- Query 3
+-- Products Missing NetSuite ID
+select 
+P.product_id, 
+P.internal_name, 
+P.product_type_id, 
+GT.id_value as netsuit_id 
+from product as P join good_identification GT on P.product_id = GT.product_id
+where GT.good_identification_type_id="ERP_ID" and GT.id_value is null;

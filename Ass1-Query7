@@ -1,0 +1,11 @@
+-- Query 7 
+-- Newly Created Sales Orders and Payment Methods
+select distinct 
+OH.order_id, 
+OH.grand_total as total_amount, 
+OPP.payment_method_type_id as payment_method, 
+OI.external_id as shopify_id  
+from order_header OH 
+join order_item OI on OH.order_id = OI.order_id 
+left join order_payment_preference OPP on OPP.order_id = OH.order_id 
+where OH.status_id = "ORDER_CREATED" and OH.order_type_id = "SALES_ORDER";

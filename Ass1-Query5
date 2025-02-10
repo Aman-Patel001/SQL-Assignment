@@ -1,0 +1,21 @@
+-- Query 5
+select P.product_id,
+	   P.product_type_id,
+	   OH.product_store_id,
+       OI.quantity as TOTAL_QUANTITY,
+       P.internal_name,
+       F.facility_id,
+       OH.external_id,
+       F.facility_type_id,
+       OHI.order_history_id,
+	   OH.order_id,
+       OI.order_item_seq_id,
+       OISG.ship_group_seq_id
+from order_header OH
+join order_item OI on OI.order_id = OH.order_id
+join order_status OS on OS.order_id = OH.order_id and OH.STATUS_ID = 'order_completed' and OS.STATUS_ID = 'order_completed'
+join product P on P.product_id = OI.product_id
+join order_item_ship_group OISG on OI.order_id = OISG.order_id and OI.SHIP_GROUP_SEQ_ID = OISG.SHIP_GROUP_SEQ_ID
+join facility F on F.facility_id = OISG.facility_id
+join order_history OHI on OH.order_id = OHI.order_id and oi.ORDER_ITEM_SEQ_ID = OHI.ORDER_ITEM_SEQ_ID
+where OS.status_datetime BETWEEN '2023-08-01' and '2023-08-30';

@@ -1,0 +1,5 @@
+-- Query 2
+-- List All Active Physical Products
+select P.product_id, P.product_type_id, P.internal_name
+from product as P inner join product_type as PT on P.product_type_id = PT.product_type_id 
+where PT.is_physical = 'Y' and P.sales_discontinuation_date is null;

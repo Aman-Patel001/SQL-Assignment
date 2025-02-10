@@ -1,0 +1,12 @@
+-- Query 8
+-- Payment Captured but Not Shipped
+select 
+OH.order_id,
+OH.status_id as order_status,
+OPP.status_id as payment_method,
+S.status_id as shipment_status
+from order_header OH
+join order_payment_preference OPP on OH.order_id = OPP.order_id
+join order_shipment OS on OH.order_id = OS.order_id
+join shipment S on OS.shipment_id = S.shipment_id 
+where S.status_id != "SHIPMENT_SHIPPED" and OPP.status_id="PAYMENT_RECEIVED";
